@@ -10,6 +10,8 @@ public class SpawnerManager : MonoBehaviour
     [SerializeField] private GameObject Minion;
     [SerializeField] private int WaveSize = 10;
     [SerializeField] private TMP_Text ui;
+    [SerializeField] private bool isBlue;
+    [SerializeField] private bool isPlayer = false;
 
     private int timer;
     private Vector3 spawnPosition;
@@ -17,17 +19,16 @@ public class SpawnerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        spawnPosition = transform.position + new Vector3(0, 0, 8);
+        spawnPosition = transform.position + new Vector3(0, 0, isBlue ? 8 : -8);
 
-        GameObject.Instantiate(Player, spawnPosition, transform.rotation);
+        if(isPlayer)
+            GameObject.Instantiate(Player, spawnPosition, transform.rotation);
 
         StartCoroutine(SpawnUnit());
     }
     
     IEnumerator SpawnUnit()
     {
-        yield return new WaitForSecondsRealtime(3);
-        StartCoroutine(SpawnWave());
         while(timer < int.MaxValue)
         {
             yield return new WaitForSecondsRealtime(1);
@@ -46,7 +47,7 @@ public class SpawnerManager : MonoBehaviour
         for(int i=0; i<WaveSize; i++)
         {
             MinionController currentMinion = GameObject.Instantiate(Minion, spawnPosition, transform.rotation).GetComponent<MinionController>();
-
+            currentMinion.SetTeam(isBlue);
 
             yield return new WaitForSecondsRealtime(0.5f);
         }
