@@ -15,6 +15,7 @@ public class SpawnerManager : MonoBehaviour
 
     private int timer;
     private Vector3 spawnPosition;
+    private bool isSpawning = false;
 
     // Start is called before the first frame update
     void Start()
@@ -35,7 +36,7 @@ public class SpawnerManager : MonoBehaviour
             timer ++;
             ui.text = timer.ToString();
 
-            if(timer % SpawnRate == 0)
+            if(timer % SpawnRate == 0 && !isSpawning)
             {
                 StartCoroutine(SpawnWave());
             }
@@ -44,13 +45,15 @@ public class SpawnerManager : MonoBehaviour
 
     IEnumerator SpawnWave()
     {
+        isSpawning = true;
         for(int i=0; i<WaveSize; i++)
         {
-            MinionController currentMinion = GameObject.Instantiate(Minion, spawnPosition, transform.rotation).GetComponent<MinionController>();
+            MinionController currentMinion = GameObject.Instantiate(Minion, spawnPosition + Vector3.up, transform.rotation).GetComponent<MinionController>();
             currentMinion.SetTeam(isBlue);
 
             yield return new WaitForSecondsRealtime(0.5f);
         }
+        isSpawning = false;
     }
 
     public int GetTimer()

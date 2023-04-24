@@ -1,27 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.AI;
 
 public class MinionController : MonoBehaviour
 {
     public int uid;
 
     [SerializeField] private List<GameObject> Path;
-    [SerializeField] private float MoveSpeed;
     [SerializeField] private int AttackDamage;
     [SerializeField] private float AttackSpeed;
     [SerializeField] private Transform HealthBar;
+    [SerializeField] private GameObject DamageNumber;
 
-    private int currentPoint = 0;
-    private Vector3 desiredPosition;
+    [SerializeField] private int currentPoint = 0;
     private int health = 100;
     [SerializeField] private int currentHealth = 100;
     [SerializeField] private GameObject targetedEnemy;
     [SerializeField] private string team;
+    private NavMeshAgent agent;
 
     // Start is called before the first frame update
     void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
         uid = Random.Range(int.MinValue, int.MaxValue);
     }
 
@@ -30,22 +33,19 @@ public class MinionController : MonoBehaviour
     {
         if(targetedEnemy == null)
         {
-            desiredPosition = Path[currentPoint].transform.position;
-            desiredPosition = new Vector3(desiredPosition.x, transform.position.y, desiredPosition.z);
-
-            if(currentPoint < 2 && Vector3.Distance(transform.position, desiredPosition) < 2)
+            if(currentPoint < 2 && Vector3.Distance(transform.position, Path[currentPoint].transform.position) <= 5)
                 currentPoint++;
+
+            agent.SetDestination(Path[currentPoint].transform.position);
+        }
+        else
+        {
+            agent.SetDestination(transform.position);
         }
     }
 
     void FixedUpdate()
     {
-        if(targetedEnemy == null)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, desiredPosition, Time.deltaTime * MoveSpeed);
-            transform.rotation = Quaternion.LookRotation(Vector3.Normalize(desiredPosition-transform.position), transform.up);
-        }
-
         HealthBar.localScale = new Vector3(2, 2, ((float)currentHealth/(float)health)+0.03f);
         HealthBar.transform.localPosition = Vector3.MoveTowards(Vector3.zero, new Vector3(0, 0, -(1-(float)currentHealth/(float)health)/2), 1);
     }
@@ -80,7 +80,9 @@ public class MinionController : MonoBehaviour
     {
         while(targetedEnemy != null)
         {
-            targetedEnemy.GetComponent<MinionController>().Damage(AttackDamage);
+            transform.rotation = Quaternion.LookRotation(Vector3.Normalize(targetedEnemy.transform.position-transform.position), transform.up);
+            if(targetedEnemy.GetComponent<MinionController>().Damage(AttackDamage + Random.Range(-2, 1)) <= 0)
+                targetedEnemy = null;
             yield return new WaitForSecondsRealtime(AttackSpeed);
         }
 
@@ -90,8 +92,8 @@ public class MinionController : MonoBehaviour
     IEnumerator KillUnit()
     {
         targetedEnemy = null;
-        
-        yield return new WaitForSecondsRealtime(.5f);
+
+        yield return null;
 
         GameObject.Destroy(this.gameObject);
     }
@@ -111,6 +113,8 @@ public class MinionController : MonoBehaviour
             currentHealth = 0;
         }
 
+        Instantiate(DamageNumber, transform.position, transform.rotation).GetComponent<TMP_Text>().text = damage.ToString();
+
         return currentHealth;
     }
 
@@ -118,17 +122,8 @@ public class MinionController : MonoBehaviour
     {
         team = isBlue ? "Left" : "Right";
 
-        if(Random.Range(1, 3) == 1)
-        {
-            Path.Add(GameObject.Find("BottomPath" + (isBlue ? "1" : "2")));
-            Path.Add(GameObject.Find("BottomPath" + (isBlue ? "2" : "1")));
-            Path.Add(GameObject.Find(isBlue ? "RightSpawner" : "LeftSpawner"));
-        }
-        else
-        {
-            Path.Add(GameObject.Find("TopPath" + (isBlue ? "1" : "2")));
-            Path.Add(GameObject.Find("TopPath" + (isBlue ? "2" : "1")));
-            Path.Add(GameObject.Find(isBlue ? "RightSpawner" : "LeftSpawner"));
-        }
+        Path.Add(GameObject.Find("PathNode" + team));
+        Path.Add(GameObject.Find("PathNode" + (team == "Left" ? "Right" : "Left")));
+        Path.Add(GameObject.Find(team + "Spawner"));
     }
 }

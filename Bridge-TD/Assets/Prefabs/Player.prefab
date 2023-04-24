@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7989681434890676822}
   - component: {fileID: 6679935506069892519}
   - component: {fileID: 1670924550344911404}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Iris
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 8831454503797598005}
   - component: {fileID: 8590459331616304271}
   - component: {fileID: 8209328024831147472}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pupil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -206,7 +206,7 @@ GameObject:
   - component: {fileID: 1409833064369064473}
   - component: {fileID: 7545712017293961802}
   - component: {fileID: 5109508445396522330}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LeftEye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -305,7 +305,7 @@ GameObject:
   - component: {fileID: 1744584927637235796}
   - component: {fileID: 8777246018020677213}
   - component: {fileID: 5394841016863457685}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pupil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -402,7 +402,7 @@ GameObject:
   - component: {fileID: 8127364598295032683}
   - component: {fileID: 3225719265538334905}
   - component: {fileID: 8572825237456457790}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Iris
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -499,7 +499,7 @@ GameObject:
   - component: {fileID: 2335748698151974950}
   - component: {fileID: 1957681603750523158}
   - component: {fileID: 3440406391447103099}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -597,7 +597,7 @@ GameObject:
   - component: {fileID: 5168404841869256523}
   - component: {fileID: 7674669161135492736}
   - component: {fileID: 1726662897779644299}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RightEye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -698,7 +698,7 @@ GameObject:
   - component: {fileID: 9116559458690328709}
   - component: {fileID: 7476645130067990893}
   - component: {fileID: 7183522034970629073}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
