@@ -18,7 +18,7 @@ public class DamageNumbers : MonoBehaviour
 
     IEnumerator DeleteTimer()
     {
-        GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-50, 50), 200, Random.Range(-50, 50)));
+        GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-50, 50), 100, Random.Range(-50, 50)));
         yield return new WaitForSeconds(1);
         Destroy(this.gameObject);
     }
