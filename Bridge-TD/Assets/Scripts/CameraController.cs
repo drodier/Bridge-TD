@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    [SerializeField] private float minCamZoom;
+    [SerializeField] private float maxCamZoom;
+
     private GameObject player;
     private Vector3 desiredPosition;
     private Vector3 cameraOffset;
+    private Vector3 scrollDelta;
 
     [SerializeField] private float MoveSpeed;
 
@@ -20,6 +24,13 @@ public class CameraController : MonoBehaviour
     {
         if(player != null)
             desiredPosition = player.transform.position + cameraOffset;
+
+        scrollDelta = new Vector3(Input.mouseScrollDelta.y, Input.mouseScrollDelta.y*1.1f, 0);
+
+        cameraOffset -= scrollDelta;
+
+        if(cameraOffset.magnitude < minCamZoom || cameraOffset.magnitude > maxCamZoom)
+            cameraOffset += scrollDelta;
     }
 
     // Update is called once per frame
