@@ -13,12 +13,13 @@ public class MinionController : MonoBehaviour
     [SerializeField] private float AttackSpeed;
     [SerializeField] private Transform HealthBar;
     [SerializeField] private GameObject DamageNumber;
+    [SerializeField] private int maxHealth = 50;
+    [SerializeField] private Material rightMaterial;
 
-    [SerializeField] private int currentPoint = 0;
-    private int health = 100;
-    [SerializeField] private int currentHealth = 100;
-    [SerializeField] private GameObject targetedEnemy;
-    [SerializeField] private string team;
+    private int currentPoint = 0;
+    private int currentHealth;
+    private GameObject targetedEnemy;
+    private string team;
     private NavMeshAgent agent;
 
     // Start is called before the first frame update
@@ -26,6 +27,7 @@ public class MinionController : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         uid = Random.Range(int.MinValue, int.MaxValue);
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -46,8 +48,8 @@ public class MinionController : MonoBehaviour
 
     void FixedUpdate()
     {
-        HealthBar.localScale = new Vector3(2, 2, ((float)currentHealth/(float)health)+0.03f);
-        HealthBar.transform.localPosition = Vector3.MoveTowards(Vector3.zero, new Vector3(0, 0, -(1-(float)currentHealth/(float)health)/2), 1);
+        HealthBar.localScale = new Vector3(2, 2, ((float)currentHealth/(float)maxHealth)+0.03f);
+        HealthBar.transform.localPosition = Vector3.MoveTowards(Vector3.zero, new Vector3(0, 0, -(1-(float)currentHealth/(float)maxHealth)/2), 1);
     }
 
     void OnTriggerStay(Collider other)
@@ -125,5 +127,8 @@ public class MinionController : MonoBehaviour
         Path.Add(GameObject.Find("PathNode" + team));
         Path.Add(GameObject.Find("PathNode" + (team == "Left" ? "Right" : "Left")));
         Path.Add(GameObject.Find(team + "Spawner"));
+
+        if(team == "Right")
+            HealthBar.GetComponent<MeshRenderer>().material = rightMaterial;
     }
 }
