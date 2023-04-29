@@ -1802,6 +1802,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7707386415555594477, guid: 48d0a9eb783f89d4bb834d0d88ae6fed, type: 3}
+      propertyPath: WaveSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7707386415555594477, guid: 48d0a9eb783f89d4bb834d0d88ae6fed, type: 3}
       propertyPath: SpawnRate
       value: 3
       objectReference: {fileID: 0}
@@ -1954,9 +1958,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b1f7844cb2431143be2e43d358ba0da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnRate: 3
+  SpawnRate: 5
   Minion: {fileID: 2846062430967823522, guid: 8afc63ea86c9ae646b85e235257af82e, type: 3}
-  WaveSize: 10
+  WaveSize: 2
   isLeft: 1
 --- !u!4 &1301020089
 Transform:
@@ -3288,6 +3292,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7707386415555594477, guid: 48d0a9eb783f89d4bb834d0d88ae6fed, type: 3}
       propertyPath: isLeft
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7707386415555594477, guid: 48d0a9eb783f89d4bb834d0d88ae6fed, type: 3}
+      propertyPath: WaveSize
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7707386415555594477, guid: 48d0a9eb783f89d4bb834d0d88ae6fed, type: 3}
